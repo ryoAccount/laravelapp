@@ -14,3 +14,23 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('hello/{id?}/{pass?}', 'HelloController@index');
+
+Route::get('sample', function() {
+    
+    $param = 'bbb';
+    $html = <<<EOF
+<html>
+<head>
+    <title>hello</title>
+</head>
+<body>
+    <h1>AAA</h1>
+    <p>{$param}</p>
+</body>
+</html>
+EOF;
+
+    return $html;
+});
