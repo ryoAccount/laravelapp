@@ -21,4 +21,19 @@ class HelloController extends Controller
             </html>
 EOF;
     }
+
+    public function other() {
+        return <<<EOF
+            <html>
+            <head>
+                <title>hello/index</title>
+            </head>
+            <body>
+                <h1>other</h1>
+                <p>HelloController</p>
+                <p>other</p>
+            </body>
+            </html>
+EOF;
+    }
 }
