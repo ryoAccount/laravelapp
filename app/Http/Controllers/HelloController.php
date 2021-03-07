@@ -6,7 +6,16 @@ use Illuminate\Http\Request;
 
 class HelloController extends Controller
 {
-    public function index($id='noname', $pass='unknown') {
+    public function index(Request $req) {
+        return view('hello.index', ['id' => $req -> id]);
+    }
+
+    public function post(Request $req) {
+        $msg = $req -> msg;
+        return view('hello.index', ['msg' => $msg, 'id' => $req -> id]);
+    }
+
+    public function param($id='noname', $pass='unknown') {
         return <<<EOF
             <html>
             <head>

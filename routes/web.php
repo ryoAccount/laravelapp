@@ -15,10 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('hello', 'HelloController@index');
+Route::post('hello', 'HelloController@post');
 Route::get('hello/request', 'RequestController@index');
 Route::get('hello/single', 'SingleActionController');
 Route::get('hello/other', 'HelloController@other');
-Route::get('hello/{id?}/{pass?}', 'HelloController@index');
+Route::get('hello/{id?}/{pass?}', 'HelloController@param');
 
 Route::get('sample', function() {
     
