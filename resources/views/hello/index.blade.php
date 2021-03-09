@@ -13,6 +13,7 @@
 
     <p><middleware>google.com</middleware> to link.</p>
     <p><middleware>yahoo.co.jp</middleware> to link.</p>
+    <p><middleware>bing.com</middleware> to link.</p>
 
     <ul>
         @each('components.item', $data, 'item')
