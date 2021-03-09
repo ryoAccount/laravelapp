@@ -7,12 +7,7 @@ use Illuminate\Http\Request;
 class HelloController extends Controller
 {
     public function index(Request $req) {
-        $data = [
-            ['name' => 'taro', 'mail' => 'a@co.jp'],
-            ['name' => 'hanako', 'mail' => 'b@co.jp'],
-            ['name' => 'jiro', 'mail' => 'c@co.jp'],
-        ];
-        return view('hello.index', ['id'=>$req->id, 'data'=>$data, 'message'=>'Hello! message']);
+        return view('hello.index', ['id'=>$req->id, 'data'=>$req->data, 'message'=>'Hello! message']);
     }
 
     public function post(Request $req) {

@@ -11,6 +11,9 @@
     <p>Controller value 'message' = {{$message}}</p>
     <p>ViewComposer value 'view_message' = {{$view_message}}</p>
 
+    <p><middleware>google.com</middleware> to link.</p>
+    <p><middleware>yahoo.co.jp</middleware> to link.</p>
+
     <ul>
         @each('components.item', $data, 'item')
     </ul>
