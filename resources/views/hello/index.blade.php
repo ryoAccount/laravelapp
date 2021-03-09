@@ -8,7 +8,8 @@
 
 @section('content')
     <p>Main Contents</p>
-    <p>AAA bbb</p>
+    <p>Controller value 'message' = {{$message}}</p>
+    <p>ViewComposer value 'view_message' = {{$view_message}}</p>
 
     <ul>
         @each('components.item', $data, 'item')

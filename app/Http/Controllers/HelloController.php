@@ -12,7 +12,7 @@ class HelloController extends Controller
             ['name' => 'hanako', 'mail' => 'b@co.jp'],
             ['name' => 'jiro', 'mail' => 'c@co.jp'],
         ];
-        return view('hello.index', ['id' => $req -> id, 'data' => $data]);
+        return view('hello.index', ['id'=>$req->id, 'data'=>$data, 'message'=>'Hello! message']);
     }
 
     public function post(Request $req) {
