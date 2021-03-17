@@ -7,12 +7,18 @@ use Illuminate\Http\Request;
 class HelloController extends Controller
 {
     public function index(Request $req) {
-        return view('hello.index', ['id'=>$req->id, 'data'=>$req->data, 'message'=>'Hello! message']);
+        return view('hello.index', ['id'=>$req->id, 'data'=>$req->data, 'message'=>'Hello! validate']);
     }
 
     public function post(Request $req) {
+        $validate_rule = [
+            'name' => 'required',
+            'mail' => 'email',
+            'age' => 'numeric|between:0,150',
+        ];
+        $this->validate($req, $validate_rule);
         $msg = $req -> msg;
-        return view('hello.index', ['msg' => $msg, 'id' => $req -> id]);
+        return view('hello.index', ['msg' => $msg, 'id' => $req -> id, 'message'=>'validate OK!']);
     }
 
     public function param($id='noname', $pass='unknown') {
