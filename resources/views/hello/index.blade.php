@@ -10,28 +10,22 @@
     <p>Main Contents</p>
 
     @if (count($errors) > 0)
-    <div>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+    <p>Validate error!</p>
     @endif
 
     <form action="/hello" method="post">
         <table>
             @csrf
-            @if ($errors->has('name'))
+            @error('name')
             <tr>
                 <th>
                     ERROR
                 </th>
                 <td>
-                    {{$errors->first('name')}}
+                    {{$message}}
                 </td>
             </tr>
-            @endif
+            @enderror
             <tr>
                 <th>
                     name:
@@ -41,16 +35,16 @@
                 </td>
             </tr>
 
-            @if ($errors->has('mail'))
+            @error('mail')
             <tr>
                 <th>
                     ERROR
                 </th>
                 <td>
-                    {{$errors->first('mail')}}
+                    {{$message}}
                 </td>
             </tr>
-            @endif
+            @enderror
             <tr>
                 <th>
                     mail:
@@ -60,16 +54,16 @@
                 </td>
             </tr>
 
-            @if ($errors->has('age'))
+            @error('age')
             <tr>
                 <th>
                     ERROR
                 </th>
                 <td>
-                    {{$errors->first('age')}}
+                    {{$message}}
                 </td>
             </tr>
-            @endif
+            @enderror
             <tr>
                 <th>
                     age:
@@ -78,6 +72,45 @@
                     <input type="text" name="age" value="{{old('age')}}">
                 </td>
             </tr>
+
+            @error('url')
+            <tr>
+                <th>
+                    ERROR
+                </th>
+                <td>
+                    {{$message}}
+                </td>
+            </tr>
+            @enderror
+            <tr>
+                <th>
+                    url:
+                </th>
+                <td>
+                    <input type="text" name="url" value="{{old('url')}}">
+                </td>
+            </tr>
+
+            @error('alpha')
+            <tr>
+                <th>
+                    ERROR
+                </th>
+                <td>
+                    {{$message}}
+                </td>
+            </tr>
+            @enderror
+            <tr>
+                <th>
+                    alpha:
+                </th>
+                <td>
+                    <input type="text" name="alpha" value="{{old('alpha')}}">
+                </td>
+            </tr>
+
             <tr>
                 <th></th>
                 <td>

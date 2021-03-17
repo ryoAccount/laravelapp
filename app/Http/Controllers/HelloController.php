@@ -15,6 +15,8 @@ class HelloController extends Controller
             'name' => 'required',
             'mail' => 'email',
             'age' => 'numeric|between:0,150',
+            'url' => 'active_url',
+            'alpha' => 'alpha-num',
         ];
         $this->validate($req, $validate_rule);
         $msg = $req -> msg;
