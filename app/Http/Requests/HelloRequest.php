@@ -29,7 +29,7 @@ class HelloRequest extends FormRequest
         return [
             'name' => 'required',
             'mail' => 'email',
-            'age' => 'numeric|between:0,150',
+            'age' => 'numeric|hello',
             'url' => 'active_url',
             'alpha' => 'alpha-num',
         ];
@@ -41,7 +41,7 @@ class HelloRequest extends FormRequest
             'name.required' => 'name!!',
             'mail.email' => 'email!!',
             'age.numeric' => 'numeric!!',
-            'age.between' => 'between!!',
+            'age.hello' => '%2!!',
             'url.active_url' => 'active_url!!',
             'alpha.alpha_num' => 'alpha-num!!',
         ];
