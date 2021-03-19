@@ -3,22 +3,49 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\HelloRequest;
+use Validator;
 
 class HelloController extends Controller
 {
     public function index(Request $req) {
-        return view('hello.index', ['id'=>$req->id, 'data'=>$req->data, 'message'=>'Hello! validate']);
+        $validator = Validator::make($req->query(), [
+            'id' => 'required',
+            'pw' => 'required',
+        ]);
+        if($validator->fails()) {
+            $msg = 'NG!';
+        } else {
+            $msg = 'OK!';
+        }
+        return view('hello.index', ['id'=>$req->id, 'data'=>$req->data, 'message'=>$msg]);
     }
 
     public function post(Request $req) {
-        $validate_rule = [
+        $validator = Validator::make($req->all(), [
             'name' => 'required',
             'mail' => 'email',
-            'age' => 'numeric|between:0,150',
+            'age' => 'numeric',
             'url' => 'active_url',
             'alpha' => 'alpha-num',
-        ];
-        $this->validate($req, $validate_rule);
+        ], [
+            'name.required' => 'name!!',
+            'mail.email' => 'email!!',
+            'age.numeric' => 'numeric!!',
+            'age.min' => 'min!!',
+            'age.max' => 'max!!',
+            'url.active_url' => 'active_url!!',
+            'alpha.alpha_num' => 'alpha-num!!',
+        ]);
+        $validator->sometimes('age', 'min:0', function($input) {
+            return is_numeric($input->age);
+        });
+        $validator->sometimes('age', 'max:200', function($input) {
+            return is_numeric($input->age);
+        });
+        if($validator->fails()) {
+            return redirect('/hello')->withErrors($validator)->withInput();
+        }
         $msg = $req -> msg;
         return view('hello.index', ['msg' => $msg, 'id' => $req -> id, 'message'=>'validate OK!']);
     }
