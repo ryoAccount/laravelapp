@@ -9,12 +9,21 @@ use Validator;
 class HelloController extends Controller
 {
     public function index(Request $req) {
-        return view('hello.index', ['id'=>$req->id, 'data'=>$req->data, 'message'=>'Hello Validator']);
+        if($req->hasCookie('msg')) {
+            $msg = 'Cookie: ' . $req->cookie('msg');
+        } else {
+            $msg = 'No Cookie';
+        }
+        return view('hello.index', ['msg'=>$msg]);
     }
 
-    public function post(HelloRequest $req) {
-        $msg = $req -> msg;
-        return view('hello.index', ['msg' => $msg, 'id' => $req -> id, 'message'=>'validate OK!']);
+    public function post(Request $req) {
+        $validate_rule = ['msg' => 'required'];
+        $this->validate($req, $validate_rule);
+        $msg = $req->msg;
+        $res = response()->view('hello.index', ['msg' => 'Cookie: ' . $msg]);
+        $res->cookie('msg', $msg, 100);
+        return $res;
     }
 
     public function param($id='noname', $pass='unknown') {

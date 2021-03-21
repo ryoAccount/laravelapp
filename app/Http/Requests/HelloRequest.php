@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\MyRule;
 
 class HelloRequest extends FormRequest
 {
@@ -27,9 +28,10 @@ class HelloRequest extends FormRequest
     public function rules()
     {
         return [
+            'msg' => 'required',
             'name' => 'required',
             'mail' => 'email',
-            'age' => 'numeric|hello',
+            'age' => ['numeric', new MyRule(5)],
             'url' => 'active_url',
             'alpha' => 'alpha-num',
         ];
