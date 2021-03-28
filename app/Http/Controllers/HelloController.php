@@ -28,6 +28,20 @@ class HelloController extends Controller
         return $res;
     }
 
+    public function add(Request $req) {
+        return view('hello.add');
+    }
+
+    public function create(Request $req) {
+        $param = [
+            'name' => $req->name,
+            'mail' => $req->mail,
+            'age' => $req->age,
+        ];
+        DB::insert('insert into people (name, mail, age) values (:name, :mail, :age)', $param);
+        return redirect('/hello');
+    }
+
     public function param($id='noname', $pass='unknown') {
         return <<<EOF
             <html>

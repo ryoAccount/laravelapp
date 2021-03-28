@@ -19,6 +19,8 @@ Route::get('/', function () {
 
 Route::get('hello', 'HelloController@index')->middleware('hello');
 Route::post('hello', 'HelloController@post');
+Route::get('hello/add', 'HelloController@add');
+Route::post('hello/add', 'HelloController@create');
 Route::get('hello/request', 'RequestController@index');
 Route::get('hello/single', 'SingleActionController');
 Route::get('hello/other', 'HelloController@other');
