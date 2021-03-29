@@ -10,7 +10,8 @@ use Validator;
 class HelloController extends Controller
 {
     public function index(Request $req) {
-        $items = DB::select('select * from people');
+        // $items = DB::select('select * from people');?
+        $items = DB::table('people')->get();
         if($req->hasCookie('msg')) {
             $msg = 'Cookie: ' . $req->cookie('msg');
         } else {
@@ -38,25 +39,35 @@ class HelloController extends Controller
             'mail' => $req->mail,
             'age' => $req->age,
         ];
-        DB::insert('insert into people (name, mail, age) values (:name, :mail, :age)', $param);
+        // DB::insert('insert into people (name, mail, age) values (:name, :mail, :age)', $param);
+        DB::table('people')->insert($param);
         return redirect('/hello');
     }
 
     public function edit(Request $req) {
         $param = ['id' => $req->id];
-        $item = DB::select('select * from people where id = :id', $param);
-        return view('hello.edit', ['form' => $item[0]]);
+        // $item = DB::select('select * from people where id = :id', $param);
+        $item = DB::table('people')->where('id', $req->id)->first();
+        return view('hello.edit', ['form' => $item]);
     }
 
     public function update(Request $req) {
         $param = [
-            'id' => $req->id,
             'name' => $req->name,
             'mail' => $req->mail,
             'age' => $req->age,
         ];
-        DB::update('update people set name = :name, mail = :mail, age = :age where id = :id', $param);
+        // DB::update('update people set name = :name, mail = :mail, age = :age where id = :id', $param);
+        DB::table('people')->where('id', $req->id)->update($param);
         return redirect('/hello');
+    }
+
+    public function show(Request $req) {
+        // $item = DB::table('people')->where('id', $req->id)->first();
+        // $items = DB::table('people')->where('id', '<=', $req->id)->get();
+        // $items = DB::table('people')->whereRaw('id <= ? and age > 10',[$req->id])->orderBy('id', 'desc')->get();
+        $items = DB::table('people')->limit(2)->get();
+        return view('hello.show', ['items' => $items]);
     }
 
     public function param($id='noname', $pass='unknown') {
