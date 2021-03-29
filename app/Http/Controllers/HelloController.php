@@ -42,6 +42,23 @@ class HelloController extends Controller
         return redirect('/hello');
     }
 
+    public function edit(Request $req) {
+        $param = ['id' => $req->id];
+        $item = DB::select('select * from people where id = :id', $param);
+        return view('hello.edit', ['form' => $item[0]]);
+    }
+
+    public function update(Request $req) {
+        $param = [
+            'id' => $req->id,
+            'name' => $req->name,
+            'mail' => $req->mail,
+            'age' => $req->age,
+        ];
+        DB::update('update people set name = :name, mail = :mail, age = :age where id = :id', $param);
+        return redirect('/hello');
+    }
+
     public function param($id='noname', $pass='unknown') {
         return <<<EOF
             <html>
