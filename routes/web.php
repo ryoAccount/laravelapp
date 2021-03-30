@@ -29,6 +29,10 @@ Route::get('hello/single', 'SingleActionController');
 Route::get('hello/other', 'HelloController@other');
 Route::get('hello/{id?}/{pass?}', 'HelloController@param');
 
+Route::get('person', 'PersonController@index');
+Route::get('person/find', 'PersonController@find');
+Route::post('person/find', 'PersonController@search');
+
 Route::get('sample', function() {
     
     $param = 'bbb';
