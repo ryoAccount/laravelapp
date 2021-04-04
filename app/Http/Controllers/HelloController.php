@@ -70,6 +70,17 @@ class HelloController extends Controller
         return view('hello.show', ['items' => $items]);
     }
 
+    public function getSession(Request $req) {
+        $data = $req->session()->get('msg');
+        return view('hello/session', ['session_data' => $data]);
+    }
+
+    public function setSession(Request $req) {
+        $msg = $req->input;
+        $req->session()->put('msg', $msg);
+        return redirect('hello/session');
+    }
+
     public function param($id='noname', $pass='unknown') {
         return <<<EOF
             <html>

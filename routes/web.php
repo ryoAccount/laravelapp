@@ -27,6 +27,8 @@ Route::get('hello/show', 'HelloController@show');
 Route::get('hello/request', 'RequestController@index');
 Route::get('hello/single', 'SingleActionController');
 Route::get('hello/other', 'HelloController@other');
+Route::get('hello/session', 'HelloController@getSession');
+Route::post('hello/session', 'HelloController@setSession');
 Route::get('hello/{id?}/{pass?}', 'HelloController@param');
 
 Route::get('person', 'PersonController@index');
