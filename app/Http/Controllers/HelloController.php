@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\HelloRequest;
 use App\Person;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 
 class HelloController extends Controller
@@ -13,6 +14,7 @@ class HelloController extends Controller
     public function index(Request $req) {
         // $items = DB::select('select * from people');?
         // $items = DB::table('people')->get();
+        $user = Auth::user();
         $sort = $req->sort ? $req->sort : 'name';
         $items = Person::orderBy($sort, 'asc')->paginate(5);
         if($req->hasCookie('msg')) {
@@ -20,7 +22,7 @@ class HelloController extends Controller
         } else {
             $msg = 'No Cookie';
         }
-        return view('hello.index', ['msg'=>$msg, 'items' => $items, 'sort' => $sort]);
+        return view('hello.index', ['msg'=>$msg, 'items' => $items, 'sort' => $sort, 'user' => $user]);
     }
 
     public function post(Request $req) {
@@ -82,6 +84,21 @@ class HelloController extends Controller
         $msg = $req->input;
         $req->session()->put('msg', $msg);
         return redirect('hello/session');
+    }
+
+    public function getAuth(Request $req) {
+        return view('hello.auth', ['msg' => 'Please Login']);
+    }
+
+    public function setAuth(Request $req) {
+        $email = $req->email;
+        $password = $req->password;
+        if (Auth::attempt(['email' => $email, 'password' => $password])) {
+            $msg = 'Login completed';
+        } else {
+            $msg = 'Login failed';
+        }
+        return view('hello.auth', ['msg' => $msg]);
     }
 
     public function param($id='noname', $pass='unknown') {

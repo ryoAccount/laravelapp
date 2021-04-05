@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('hello', 'HelloController@index')->middleware('hello');
+Route::get('hello', 'HelloController@index')->middleware('hello')->middleware('auth');
 Route::post('hello', 'HelloController@post');
 Route::get('hello/add', 'HelloController@add');
 Route::post('hello/add', 'HelloController@create');
@@ -29,6 +29,8 @@ Route::get('hello/single', 'SingleActionController');
 Route::get('hello/other', 'HelloController@other');
 Route::get('hello/session', 'HelloController@getSession');
 Route::post('hello/session', 'HelloController@setSession');
+Route::get('hello/auth', 'HelloController@getAuth');
+Route::post('hello/auth', 'HelloController@setAuth');
 Route::get('hello/{id?}/{pass?}', 'HelloController@param');
 
 Route::get('person', 'PersonController@index');
@@ -52,3 +54,6 @@ EOF;
 
     return $html;
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

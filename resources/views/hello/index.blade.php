@@ -9,6 +9,16 @@
 @section('content')
     <p>Main Contents</p>
 
+    @if (Auth::check())
+        <p>Login</p>
+        <p>User: {{$user->name}}</p>
+        <p>Email: {{$user->email}}</p>
+    @else
+        <p>Not Login</p>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+    @endif
+
     <table>
         <tr>
             <th><a href="/hello?sort=name">Name</a></th>
