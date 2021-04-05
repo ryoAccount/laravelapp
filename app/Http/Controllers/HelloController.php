@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\HelloRequest;
+use App\Person;
 use Illuminate\Support\Facades\DB;
 use Validator;
 
@@ -11,13 +12,15 @@ class HelloController extends Controller
 {
     public function index(Request $req) {
         // $items = DB::select('select * from people');?
-        $items = DB::table('people')->get();
+        // $items = DB::table('people')->get();
+        $sort = $req->sort ? $req->sort : 'name';
+        $items = Person::orderBy($sort, 'asc')->paginate(5);
         if($req->hasCookie('msg')) {
             $msg = 'Cookie: ' . $req->cookie('msg');
         } else {
             $msg = 'No Cookie';
         }
-        return view('hello.index', ['msg'=>$msg, 'items' => $items]);
+        return view('hello.index', ['msg'=>$msg, 'items' => $items, 'sort' => $sort]);
     }
 
     public function post(Request $req) {
