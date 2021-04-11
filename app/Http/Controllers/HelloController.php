@@ -93,13 +93,17 @@ class HelloController extends Controller
     public function setAuth(Request $req) {
         $email = $req->email;
         $password = $req->password;
-        if (Auth::attempt(['email' => $email, 'password' => $password])) {
+        if (Auth::attempt(['email' => $email, 'password' => $password], true)) {
             $msg = 'Login completed';
         } else {
             $msg = 'Login failed';
         }
         return view('hello.auth', ['msg' => $msg]);
     }
+
+    // public function toNexmo($notifiable) {
+    //     return (new NexmoMessage)->content('Your SMS message content');
+    // }
 
     public function param($id='noname', $pass='unknown') {
         return <<<EOF
